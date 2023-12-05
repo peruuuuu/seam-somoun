@@ -1,0 +1,60 @@
+#include "mainwindow.h"
+#include <QHBoxLayout>
+#include <QWidget>
+#include <QLabel>
+
+class CustomWidget : public QWidget {
+public:
+    explicit CustomWidget(QWidget *parent = nullptr) : QWidget(parent) {}
+
+protected:
+    void paintEvent(QPaintEvent *event) override {
+        Q_UNUSED(event);
+    }
+};
+
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
+    CustomWidget *centralWidget = new CustomWidget(this);
+    setCentralWidget(centralWidget);
+
+    // Create a vertical layout
+    QVBoxLayout *layout = new QVBoxLayout(centralWidget);
+    layout->setSpacing(0);  // Set spacing to 0
+    layout->setContentsMargins(0, 0, 0, 0);  // Set margins to 0
+
+    // Create the menu widget
+    QWidget *menuWidget = new QWidget(centralWidget);
+    menuWidget->setFixedHeight(100);  // Set the fixed height of the menu widget
+    menuWidget->setStyleSheet("background-color: #18A8D8;");  // Set the background color to a shade of red
+    layout->addWidget(menuWidget);
+
+    // Create the body widget
+    QWidget *bodyWidget = new QWidget(centralWidget);
+    bodyWidget->setStyleSheet("background-color: #A1CAF1;");  // Set the background color to a shade of blue
+    layout->addWidget(bodyWidget);
+
+    // Create a horizontal layout for the body widget
+    QHBoxLayout *bodyLayout = new QHBoxLayout(bodyWidget);
+    bodyLayout->setSpacing(0);  // Set spacing to 0
+    bodyLayout->setContentsMargins(0, 0, 0, 0);  // Set margins to 0
+
+    // Create and set the first image label
+    QLabel *imageLabel1 = new QLabel(bodyWidget);
+    QPixmap image1("C:/Users/User/OneDrive - Cambodia Academy of Digital Technology/year2_term1/Advance_Algorithm/QT/testing/Aproject/client_pic.png");
+    QSize scaledSize1 = image1.scaled(bodyWidget->size() * 12, Qt::KeepAspectRatio).size();
+    image1 = image1.scaled(scaledSize1, Qt::KeepAspectRatio);
+    imageLabel1->setPixmap(image1);
+    bodyLayout->addStretch(1);  // Add a stretch before the image label to center it horizontally
+    bodyLayout->addWidget(imageLabel1);
+    bodyLayout->addStretch(1);  // Add a stretch after the image label to center it horizontally
+
+    // Create and set the second image label
+    QLabel *imageLabel2 = new QLabel(bodyWidget);
+    QPixmap image2("C:/Users/User/OneDrive - Cambodia Academy of Digital Technology/year2_term1/Advance_Algorithm/QT/testing/Aproject/sever_pic.png");
+    QSize scaledSize2 = image2.scaled(bodyWidget->size() * 12, Qt::KeepAspectRatio).size();
+    image2 = image2.scaled(scaledSize2, Qt::KeepAspectRatio);
+    imageLabel2->setPixmap(image2);
+    bodyLayout->addStretch(1);  // Add a stretch before the image label to center it horizontally
+    bodyLayout->addWidget(imageLabel2);
+    bodyLayout->addStretch(1);  // Add a stretch after the image label to center it horizontally
+}
